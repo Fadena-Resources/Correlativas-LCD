@@ -39,7 +39,7 @@
 <body class="bg-slate-900 text-slate-100 min-h-full flex flex-col">
 
     <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-30 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 flex flex-col lg:flex-row justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
                 <div class="bg-blue-600 text-white p-2.5 rounded-xl shadow-lg flex items-center justify-center">
                     <i class="fa-solid fa-shield-halved text-xl"></i>
@@ -50,9 +50,15 @@
                 </div>
             </div>
 
-            <!-- Botones Principales con Iconos de Disco Rígido y Flechas -->
+            <!-- Cuadrícula Interactiva 2x4 en el espacio central -->
+            <div class="grid grid-cols-4 gap-1.5 w-full max-w-md bg-slate-900/80 p-2 rounded-xl border border-slate-700" id="grid-container">
+                <!-- Generado dinámicamente -->
+            </div>
+
+            <!-- Botones Principales con Iconos actualizados -->
             <div class="flex flex-wrap items-center gap-2.5">
-                <label class="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold rounded-xl shadow transition flex items-center gap-2 cursor-pointer">
+                <!-- Cargar (Flecha hacia abajo) -->
+                <label class="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold rounded-xl shadow transition flex items-center gap-2 cursor-pointer" title="Cargar progreso">
                     <div class="relative flex items-center">
                         <i class="fa-solid fa-hard-drive"></i>
                         <i class="fa-solid fa-arrow-down text-[9px] absolute -bottom-1 -right-1.5 bg-orange-800 rounded-full px-0.5"></i>
@@ -61,7 +67,8 @@
                     <input type="file" accept=".json" onchange="app.importProgress(event)" class="hidden">
                 </label>
 
-                <button onclick="app.openSaveModal()" class="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold rounded-xl shadow transition flex items-center gap-2">
+                <!-- Guardar (Flecha hacia arriba) -->
+                <button onclick="app.openSaveModal()" class="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold rounded-xl shadow transition flex items-center gap-2" title="Guardar progreso">
                     <div class="relative flex items-center">
                         <i class="fa-solid fa-hard-drive"></i>
                         <i class="fa-solid fa-arrow-up text-[9px] absolute -bottom-1 -right-1.5 bg-orange-800 rounded-full px-0.5"></i>
@@ -77,7 +84,7 @@
     </header>
 
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
-        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-6 gap-4">
             <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 shadow-sm flex items-center justify-between">
                 <div>
                     <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Aprobadas</p>
@@ -118,9 +125,21 @@
                 </div>
             </div>
 
-            <div class="col-span-2 sm:col-span-2 lg:col-span-1 bg-slate-800/80 border border-slate-700 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+            <!-- Título Intermedio (Barra de Progreso) -->
+            <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Avance Total</span>
+                    <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Título Intermedio</span>
+                    <span id="stat-percent-intermedio" class="text-sm font-bold text-blue-400">0%</span>
+                </div>
+                <div class="w-full bg-slate-700 rounded-full h-2.5 overflow-hidden">
+                    <div id="stat-progress-bar-intermedio" class="bg-blue-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Título Final (Barra de Progreso) -->
+            <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Título Final</span>
                     <span id="stat-percent" class="text-sm font-bold text-emerald-400">0%</span>
                 </div>
                 <div class="w-full bg-slate-700 rounded-full h-2.5 overflow-hidden">
@@ -149,12 +168,13 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-900/80 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-700">
+                            <th class="py-3 px-4 font-semibold text-center w-12">Nota</th>
                             <th class="py-3 px-4 font-semibold text-center w-16">Nº</th>
                             <th class="py-3 px-4 font-semibold">Actividad Curricular</th>
                             <th class="py-3 px-4 font-semibold hidden md:table-cell">Ciclo / Año / Cuatrimestre</th>
                             <th class="py-3 px-4 font-semibold text-center w-24 hidden sm:table-cell">Horas</th>
                             <th class="py-3 px-4 font-semibold text-center w-36">Correlativas</th>
-                            <th class="py-3 px-4 font-semibold text-center w-48">Estado Académico</th>
+                            <th class="py-3 px-4 font-semibold text-center w-40">Estado Académico</th>
                         </tr>
                     </thead>
                     <tbody id="courses-tbody" class="divide-y divide-slate-700/60 text-sm">
@@ -164,6 +184,30 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal de Notas por Materia -->
+    <div id="note-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-6 sm:p-8 max-w-md w-full mx-4 shadow-2xl relative animate-popup">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-700 pb-3">
+                <h3 id="note-modal-title" class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-note-sticky text-amber-400"></i> Notas de la Materia
+                </h3>
+                <button onclick="app.closeNoteModal()" class="text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Notas personales, fechas de examen o parciales:</label>
+                    <textarea id="course-note-input" rows="4" placeholder="Ej: Parcial 1: 15/06, Recup: 22/06..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-xl p-3 focus:outline-none focus:border-blue-500 resize-y"></textarea>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button onclick="app.closeNoteModal()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs rounded-xl transition font-medium">Cancelar</button>
+                    <button onclick="app.saveCourseNote()" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs rounded-xl font-semibold shadow transition">Guardar Nota</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal de Opciones de Guardado -->
     <div id="save-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
@@ -234,7 +278,6 @@
             </div>
 
             <form onsubmit="app.sendContactEmail(event)" class="space-y-4 text-xs">
-                <!-- Copiar Dirección Ofuscada -->
                 <div>
                     <label class="block text-slate-400 mb-1 font-medium">Dirección de Contacto:</label>
                     <div class="flex items-center gap-2">
@@ -245,13 +288,11 @@
                     </div>
                 </div>
 
-                <!-- Tu Correo (Remitente con validación segura de email) -->
                 <div>
                     <label class="block text-slate-400 mb-1 font-medium">Tu Correo Electrónico <span class="text-red-400">*</span>:</label>
                     <input type="email" id="contact-sender" required maxlength="100" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="tucorreo@ejemplo.com" class="w-full bg-slate-900 border border-slate-700 text-slate-200 placeholder-slate-500 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500">
                 </div>
 
-                <!-- Asunto con prefijo bloqueado y validación anti-inyección -->
                 <div>
                     <label class="block text-slate-400 mb-1 font-medium">Asunto <span class="text-red-400">*</span>:</label>
                     <div class="flex items-center bg-slate-900 border border-slate-700 rounded-xl overflow-hidden">
@@ -261,7 +302,6 @@
                     <p class="text-[10px] text-slate-500 mt-1">Solo se permiten letras, números y espacios estándar.</p>
                 </div>
 
-                <!-- Mensaje expandible y sanitizado -->
                 <div>
                     <label class="block text-slate-400 mb-1 font-medium">Mensaje <span class="text-red-400">*</span>:</label>
                     <textarea id="contact-message" rows="4" required maxlength="1000" placeholder="Escribe tu consulta o comentario aquí..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 placeholder-slate-500 rounded-xl p-3 focus:outline-none focus:border-blue-500 resize-y"></textarea>
@@ -382,10 +422,14 @@
         class AcademicManager {
             constructor() {
                 this.states = {};
+                this.courseNotes = {};
+                this.gridNotes = Array(8).fill('');
                 this.filter = 'all';
                 this.searchQuery = '';
                 this.intermediateShown = false;
                 this.finalShown = false;
+                this.activeNoteCourseId = null;
+                this.draggedIndex = null;
                 this.loadFromStorage();
             }
 
@@ -393,26 +437,121 @@
                 const saved = localStorage.getItem('ciberdefensa_user_progress');
                 if (saved) {
                     try {
-                        this.states = JSON.parse(saved);
+                        const parsed = JSON.parse(saved);
+                        if (parsed.states) {
+                            this.states = parsed.states;
+                            this.courseNotes = parsed.courseNotes || {};
+                            this.gridNotes = parsed.gridNotes || Array(8).fill('');
+                        } else {
+                            this.states = parsed; // Legacy format compatibility
+                        }
                     } catch(e) {
                         this.initDefaultStates();
                     }
                 } else {
                     this.initDefaultStates();
                 }
+                this.renderGrid();
                 this.render();
                 this.checkMilestones();
             }
 
             initDefaultStates() {
                 COURSES_DATA.forEach(c => { this.states[c.id] = 'pending'; });
+                this.courseNotes = {};
+                this.gridNotes = Array(8).fill('');
+            }
+
+            saveAllData() {
+                const dataToSave = {
+                    states: this.states,
+                    courseNotes: this.courseNotes,
+                    gridNotes: this.gridNotes
+                };
+                localStorage.setItem('ciberdefensa_user_progress', JSON.stringify(dataToSave));
             }
 
             setState(id, state) {
                 this.states[id] = state;
-                localStorage.setItem('ciberdefensa_user_progress', JSON.stringify(this.states));
+                this.saveAllData();
                 this.render();
                 this.checkMilestones();
+            }
+
+            openNoteModal(courseId) {
+                this.activeNoteCourseId = courseId;
+                const course = COURSES_DATA.find(c => c.id === courseId);
+                document.getElementById('note-modal-title').innerHTML = `<i class="fa-solid fa-note-sticky text-amber-400"></i> Notas: #${courseId} ${course.name}`;
+                document.getElementById('course-note-input').value = this.courseNotes[courseId] || '';
+                document.getElementById('note-modal').classList.remove('hidden');
+            }
+
+            closeNoteModal() {
+                document.getElementById('note-modal').classList.add('hidden');
+                this.activeNoteCourseId = null;
+            }
+
+            saveCourseNote() {
+                if (this.activeNoteCourseId !== null) {
+                    const text = document.getElementById('course-note-input').value.trim();
+                    if (text) {
+                        this.courseNotes[this.activeNoteCourseId] = text;
+                    } else {
+                        delete this.courseNotes[this.activeNoteCourseId];
+                    }
+                    this.saveAllData();
+                    this.render();
+                }
+                this.closeNoteModal();
+            }
+
+            renderGrid() {
+                const gridEl = document.getElementById('grid-container');
+                gridEl.innerHTML = '';
+                this.gridNotes.forEach((note, index) => {
+                    const cell = document.createElement('div');
+                    cell.className = "bg-slate-800 border border-slate-700 hover:border-blue-500/60 rounded-lg p-1.5 min-h-[42px] flex items-center justify-center text-[11px] text-slate-200 cursor-grab active:cursor-grabbing transition relative group";
+                    cell.draggable = true;
+                    cell.dataset.index = index;
+
+                    cell.innerHTML = `
+                        <input type="text" value="${note}" placeholder="Nota ${index + 1}" oninput="app.updateGridCell(${index}, this.value)" onclick="event.stopPropagation()" class="w-full bg-transparent text-center text-slate-200 placeholder-slate-600 focus:outline-none text-[11px]">
+                    `;
+
+                    cell.addEventListener('dragstart', (e) => {
+                        this.draggedIndex = index;
+                        e.dataTransfer.setData('text/plain', index);
+                        cell.classList.add('opacity-50');
+                    });
+
+                    cell.addEventListener('dragend', () => {
+                        cell.classList.remove('opacity-50');
+                        this.draggedIndex = null;
+                    });
+
+                    cell.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                    });
+
+                    cell.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        const targetIndex = index;
+                        if (this.draggedIndex !== null && this.draggedIndex !== targetIndex) {
+                            const temp = this.gridNotes[this.draggedIndex];
+                            this.gridNotes[this.draggedIndex] = this.gridNotes[targetIndex];
+                            this.gridNotes[targetIndex] = temp;
+                            this.saveAllData();
+                            this.renderGrid();
+                        }
+                    });
+
+                    gridEl.appendChild(cell);
+                });
+            }
+
+            updateGridCell(index, val) {
+                this.gridNotes[index] = val;
+                this.saveAllData();
             }
 
             openSaveModal() {
@@ -431,7 +570,6 @@
                 document.getElementById('contact-modal').classList.add('hidden');
             }
 
-            // Método seguro de ensamblado dinámico del correo (anti-scraping de bots)
             getAssembledEmail() {
                 const p1 = "cc";
                 const p2 = "rr";
@@ -448,7 +586,6 @@
                 });
             }
 
-            // Sanitización estricta anti-XSS y validación de campos
             sanitizeInput(str) {
                 const temp = document.createElement('div');
                 temp.textContent = str;
@@ -461,7 +598,6 @@
                 const subjectSuffixInput = document.getElementById('contact-subject-suffix').value.trim();
                 const messageInput = document.getElementById('contact-message').value.trim();
 
-                // Validaciones de seguridad requeridas
                 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 if (!emailRegex.test(senderInput)) {
                     alert("Por favor ingresa un correo electrónico válido.");
@@ -492,9 +628,9 @@
             }
 
             saveToLocalStorage() {
-                localStorage.setItem('ciberdefensa_user_progress', JSON.stringify(this.states));
+                this.saveAllData();
                 this.closeSaveModal();
-                alert("¡Progreso guardado exitosamente en Local Storage!");
+                alert("¡Progreso y notas guardados exitosamente en Local Storage!");
             }
 
             saveToFileJSON() {
@@ -504,7 +640,13 @@
                 const year = String(now.getFullYear()).slice(-2);
                 const formattedDate = `${day}-${month}-${year}`;
 
-                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.states, null, 2));
+                const fullExportData = {
+                    states: this.states,
+                    courseNotes: this.courseNotes,
+                    gridNotes: this.gridNotes
+                };
+
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullExportData, null, 2));
                 const dlAnchor = document.createElement('a');
                 dlAnchor.setAttribute("href", dataStr);
                 dlAnchor.setAttribute("download", `Correlativas Guardadas ${formattedDate}.json`);
@@ -519,12 +661,19 @@
                 reader.onload = (e) => {
                     try {
                         const parsed = JSON.parse(e.target.result);
-                        if (typeof parsed === 'object' && parsed !== null) {
-                            this.states = parsed;
-                            localStorage.setItem('ciberdefensa_user_progress', JSON.stringify(this.states));
+                        if (parsed && typeof parsed === 'object') {
+                            if (parsed.states) {
+                                this.states = parsed.states;
+                                this.courseNotes = parsed.courseNotes || {};
+                                this.gridNotes = parsed.gridNotes || Array(8).fill('');
+                            } else {
+                                this.states = parsed; // Legacy JSON format
+                            }
+                            this.saveAllData();
+                            this.renderGrid();
                             this.render();
                             this.checkMilestones();
-                            alert("¡Progreso cargado con éxito!");
+                            alert("¡Progreso y notas cargados con éxito!");
                         }
                     } catch(err) {
                         alert("El archivo seleccionado no es un JSON válido.");
@@ -585,11 +734,12 @@
             }
 
             resetProgress() {
-                if(confirm("¿Estás seguro de reiniciar todo tu progreso académico registrado?")) {
+                if(confirm("¿Estás seguro de reiniciar todo tu progreso académico y notas registradas?")) {
                     this.initDefaultStates();
                     this.intermediateShown = false;
                     this.finalShown = false;
                     localStorage.removeItem('ciberdefensa_user_progress');
+                    this.renderGrid();
                     this.render();
                 }
             }
@@ -619,10 +769,14 @@
                 let countCursando = 0;
                 let countDisponibles = 0;
                 let countBloqueadas = 0;
+                let countIntermedioAprobadas = 0;
 
                 const computedList = COURSES_DATA.map(course => {
                     const status = this.getComputedStatus(course);
-                    if (status === 'approved') countAprobadas++;
+                    if (status === 'approved') {
+                        countAprobadas++;
+                        if (course.id <= 23) countIntermedioAprobadas++;
+                    }
                     else if (status === 'cursando') countCursando++;
                     else if (status === 'available') countDisponibles++;
                     else if (status === 'blocked') countBloqueadas++;
@@ -634,9 +788,15 @@
                 document.getElementById('stat-disponibles').innerText = countDisponibles;
                 document.getElementById('stat-bloqueadas').innerText = countBloqueadas;
                 
-                const percent = Math.round((countAprobadas / 37) * 100);
-                document.getElementById('stat-percent').innerText = `${percent}%`;
-                document.getElementById('stat-progress-bar').style.width = `${percent}%`;
+                // Barra Título Final
+                const percentFinal = Math.round((countAprobadas / 37) * 100);
+                document.getElementById('stat-percent').innerText = `${percentFinal}%`;
+                document.getElementById('stat-progress-bar').style.width = `${percentFinal}%`;
+
+                // Barra Título Intermedio (23 materias)
+                const percentIntermedio = Math.round((countIntermedioAprobadas / 23) * 100);
+                document.getElementById('stat-percent-intermedio').innerText = `${percentIntermedio}%`;
+                document.getElementById('stat-progress-bar-intermedio').style.width = `${percentIntermedio}%`;
 
                 const filtered = computedList.filter(course => {
                     const matchQuery = course.name.toLowerCase().includes(this.searchQuery) ||
@@ -653,7 +813,7 @@
                 });
 
                 if (filtered.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500 text-xs">No se encontraron materias con los filtros seleccionados.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-500 text-xs">No se encontraron materias con los filtros seleccionados.</td></tr>`;
                     return;
                 }
 
@@ -674,7 +834,7 @@
                             subtitleHtml = `<span class="block text-xs font-normal text-slate-400 mt-0.5">Título Final: Licenciado en Ciberdefensa (Materias 1 al 37)</span>`;
                         }
 
-                        trHeader.innerHTML = `<td colspan="6" class="py-3 px-4 uppercase tracking-wider">
+                        trHeader.innerHTML = `<td colspan="7" class="py-3 px-4 uppercase tracking-wider">
                             <div class="flex items-center gap-2">
                                 <i class="fa-solid fa-layer-group"></i>
                                 <span>${currentCycleHeader}</span>
@@ -688,7 +848,7 @@
                         currentYearHeader = course.year;
                         const trYear = document.createElement('tr');
                         trYear.className = "bg-slate-900/50 text-slate-300 font-medium text-xs border-b border-slate-700/60";
-                        trYear.innerHTML = `<td colspan="6" class="py-2 px-6"><i class="fa-regular fa-calendar mr-2 text-slate-400"></i>${currentYearHeader} • <span class="text-slate-400">${course.term}</span></td>`;
+                        trYear.innerHTML = `<td colspan="7" class="py-2 px-6"><i class="fa-regular fa-calendar mr-2 text-slate-400"></i>${currentYearHeader} • <span class="text-slate-400">${course.term}</span></td>`;
                         tbody.appendChild(trYear);
                     }
 
@@ -701,24 +861,24 @@
 
                     switch(course.computedStatus) {
                         case 'approved':
-                            badgeBg = "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 cursor-default pointer-events-none select-none";
+                            badgeBg = "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
                             badgeText = "Aprobada";
                             badgeIcon = "fa-circle-check";
                             rowBg = "bg-emerald-950/20 hover:bg-emerald-900/20 transition";
                             break;
                         case 'cursando':
-                            badgeBg = "bg-amber-500/10 text-amber-400 border-amber-500/30 cursor-default pointer-events-none select-none";
+                            badgeBg = "bg-amber-500/10 text-amber-400 border-amber-500/30";
                             badgeText = "Cursando";
                             badgeIcon = "fa-spinner fa-spin";
                             rowBg = "bg-amber-950/20 hover:bg-amber-900/20 transition";
                             break;
                         case 'available':
-                            badgeBg = "bg-blue-500/10 text-blue-400 border-blue-500/30 cursor-default pointer-events-none select-none";
+                            badgeBg = "bg-blue-500/10 text-blue-400 border-blue-500/30";
                             badgeText = "Disponible";
                             badgeIcon = "fa-lock-open";
                             break;
                         case 'blocked':
-                            badgeBg = "bg-red-500/10 text-red-400 border-red-500/30 cursor-default pointer-events-none select-none";
+                            badgeBg = "bg-red-500/10 text-red-400 border-red-500/30";
                             badgeText = "No Habilitada";
                             badgeIcon = "fa-lock";
                             rowBg = "opacity-75";
@@ -726,6 +886,9 @@
                     }
 
                     const currentStatusState = this.states[course.id] || 'pending';
+                    const hasNote = this.courseNotes[course.id] && this.courseNotes[course.id].trim() !== "";
+                    const noteTitleAttr = hasNote ? this.courseNotes[course.id] : "Agregar nota";
+                    const noteIconColor = hasNote ? "text-amber-400 bg-amber-500/10 border-amber-500/30" : "text-slate-400 bg-slate-900 border-slate-700 hover:text-slate-200";
 
                     let reqNamesText = course.req.length > 0 ? course.req.map(rId => {
                         const rc = COURSES_DATA.find(x => x.id === rId);
@@ -734,6 +897,11 @@
 
                     tr.className = rowBg;
                     tr.innerHTML = `
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="app.openNoteModal(${course.id})" class="w-8 h-8 rounded-lg border flex items-center justify-center text-xs transition ${noteIconColor}" title="${noteTitleAttr}">
+                                <i class="fa-solid fa-note-sticky"></i>
+                            </button>
+                        </td>
                         <td class="py-3 px-4 text-center font-mono text-xs text-slate-400 font-bold">#${course.id}</td>
                         <td class="py-3 px-4">
                             <div class="font-semibold text-slate-100">${course.name}</div>
@@ -751,12 +919,12 @@
                             <span title="${reqNamesText}">${course.req.length > 0 ? course.req.join(', ') : 'Ninguna'}</span>
                         </td>
                         <td class="py-3 px-4 text-center">
-                            <div class="flex items-center justify-center gap-2">
-                                <div class="px-3 py-1.5 rounded-lg border text-xs font-medium flex items-center gap-1.5 ${badgeBg}">
+                            <div class="inline-flex items-center rounded-lg border overflow-hidden ${badgeBg}">
+                                <div class="px-2.5 py-1.5 text-xs font-medium flex items-center gap-1.5 select-none pointer-events-none">
                                     <i class="fa-solid ${badgeIcon}"></i>
                                     <span>${badgeText}</span>
                                 </div>
-                                <select onchange="app.setState(${course.id}, this.value)" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-blue-500 transition">
+                                <select onchange="app.setState(${course.id}, this.value)" class="bg-slate-900 border-l border-slate-700 text-xs text-slate-200 px-1 py-1.5 focus:outline-none cursor-pointer transition" title="Cambiar estado">
                                     <option value="pending" ${currentStatusState === 'pending' ? 'selected' : ''}>Pendiente</option>
                                     <option value="cursando" ${currentStatusState === 'cursando' ? 'selected' : ''}>Cursando</option>
                                     <option value="approved" ${currentStatusState === 'approved' ? 'selected' : ''}>Aprobada</option>
